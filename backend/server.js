@@ -1,3 +1,4 @@
+ï»¿require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -24,7 +25,7 @@ app.get('/test-db', async (req, res) => {
     await prisma.$connect();
     
     res.json({
-      message: 'Base de données connectée !',
+      message: 'Base de donnÃ©es connectÃ©e !',
       status: 'PostgreSQL OK'
     });
     

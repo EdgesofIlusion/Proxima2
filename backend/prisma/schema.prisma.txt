@@ -7,27 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Utilisateur {
-  id              String   @id @default(cuid())
-  nom             String
-  email           String   @unique
-  mot_de_passe    String
-  date_inscription DateTime @default(now())
-  lieux           Lieu[]
-
-  @@map("utilisateurs")
-}
-
-model Lieu {
-  id              String   @id @default(cuid())
-  titre           String
-  description     String
-  ville           String
-  latitude        Float
-  longitude       Float
-  utilisateur_id  String
-  date_creation   DateTime @default(now())
-  utilisateur     Utilisateur @relation(fields: [utilisateur_id], references: [id])
-
-  @@map("lieux")
+model Test {
+  id   Int    @id @default(autoincrement())
+  nom  String
 }
