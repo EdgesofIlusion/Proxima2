@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Utilisateur {
+  id              String   @id @default(cuid())
+  nom             String
+  email           String   @unique
+  mot_de_passe    String
+  type            TypeUtilisateur @default(USER)
+  favoris         String[]
+  date_inscription DateTime @default(now())
+  
+  // Relations
+  lieux           Lieu[]
+  commentaires    Commentaire[]
+  
+  @@map("utilisateurs")
+}
+
+model Lieu {
+  id              String   @id @default(cuid())
+  titre           String
+  description     String
+  type            TypeLieu
+  adresse         String
+  ville           String
+  latitude        Float
+  longitude       Float
+  accessibilite   String?
+  bruit           String?
+  lumiere         String?
+  images          String[]
+  videos          String[]
+  utilisateur_id  String
+  date_creation   DateTime @default(now())
+  statut          StatutLieu @default(EN_ATTENTE)
+  
+  // Relations
+  utilisateur     Utilisateur @relation(fields: [utilisateur_id], references: [id], onDelete: Cascade)
+  commentaires    Commentaire[]
+  
+  @@map("lieux")
+}
+
+model Commentaire {
+  id           String   @id @default(cuid())
+  lieu_id      String
+  auteur_id    String
+  texte        String
+  video_lien   String?
+  date         DateTime @default(now())
+  
+  // Relations
+  lieu         Lieu     @relation(fields: [lieu_id], references: [id], onDelete: Cascade)
+  auteur       Utilisateur @relation(fields: [auteur_id], references: [id], onDelete: Cascade)
+  
+  @@map("commentaires")
+}
+
+enum TypeUtilisateur {
+  USER
+  PROPRIO
+  ADMIN
+}
+
+enum TypeLieu {
+  PUBLIC
+  PRIVE
+  NATUREL
+}
+
+enum StatutLieu {
+  EN_ATTENTE
+  VALIDE
+  REFUSE
+}
