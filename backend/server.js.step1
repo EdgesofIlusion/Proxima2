@@ -26,14 +26,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
-const authRoutes = require('./src/routes/auth');
-const lieuRoutes = require('./src/routes/lieux');
-
-app.use('/api/auth', authRoutes);
-app.use('/api/lieux', lieuRoutes);
-
-// Routes de base
+// Routes existantes
 app.get('/', (req, res) => {
   res.json({ message: 'Proxima Backend API', status: 'OK' });
 });
@@ -50,18 +43,13 @@ app.get('/test-db', async (req, res) => {
   }
 });
 
+// Route sant‚
 app.get('/health', (req, res) => {
   res.json({
     status: 'OK',
     timestamp: new Date().toISOString(),
     service: 'Proxima Backend'
   });
-});
-
-// Gestion d'erreurs
-app.use((err, req, res, next) => {
-  console.error('Erreur:', err);
-  res.status(500).json({ success: false, message: 'Erreur serveur' });
 });
 
 app.listen(PORT, () => {
