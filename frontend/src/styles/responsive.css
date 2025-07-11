@@ -1,0 +1,335 @@
+﻿/* CSS Responsive pour Proxima */
+
+/* Variables CSS pour consistance */
+:root {
+  --primary-color: #2c3e50;
+  --secondary-color: #3498db;
+  --success-color: #27ae60;
+  --warning-color: #f39c12;
+  --danger-color: #e74c3c;
+  --light-bg: #ecf0f1;
+  --card-bg: #f9f9f9;
+  --border-color: #ddd;
+  --border-radius: 8px;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+}
+
+/* Base responsive */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* Header responsive */
+.proxima-header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.proxima-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.proxima-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.proxima-nav {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.proxima-nav a, .proxima-nav button {
+  color: white;
+  text-decoration: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid white;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.proxima-user-info {
+  text-align: right;
+  font-size: 0.9rem;
+}
+
+/* Container principal */
+.proxima-main {
+  padding: 0 var(--spacing-md);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Grid lieux responsive */
+.proxima-lieux-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.proxima-lieu-card {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  background-color: var(--card-bg);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.proxima-lieu-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.proxima-lieu-card h4 {
+  margin-top: 0;
+  color: var(--primary-color);
+}
+
+.proxima-lieu-buttons {
+  margin-top: var(--spacing-md);
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.proxima-btn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.proxima-btn-primary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.proxima-btn-success {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.proxima-btn-danger {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+/* Map responsive */
+.proxima-map-container {
+  height: 300px;
+  width: 100%;
+  margin-top: var(--spacing-md);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+/* Modal responsive */
+.proxima-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: var(--spacing-md);
+}
+
+.proxima-modal-content {
+  background-color: white;
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.proxima-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.proxima-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Formulaires responsive */
+.proxima-form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.proxima-form-label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  font-weight: bold;
+}
+
+.proxima-form-input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.proxima-form-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.proxima-form-buttons .proxima-btn {
+  flex: 1;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+/* Options radio responsive */
+.proxima-radio-group {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.proxima-radio-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.proxima-radio-option input {
+  margin-right: var(--spacing-sm);
+}
+
+/* Status box */
+.proxima-status-box {
+  margin-top: 3rem;
+  padding: var(--spacing-md);
+  background-color: var(--light-bg);
+  border-radius: var(--border-radius);
+}
+
+.proxima-user-welcome {
+  background-color: #e8f5e8;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* RESPONSIVE BREAKPOINTS */
+
+/* Tablettes */
+@media (max-width: 768px) {
+  .proxima-header-content {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  
+  .proxima-nav {
+    justify-content: center;
+  }
+  
+  .proxima-user-info {
+    text-align: center;
+  }
+  
+  .proxima-lieux-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .proxima-map-container {
+    height: 250px;
+  }
+  
+  .proxima-modal-content {
+    margin: var(--spacing-sm);
+    padding: var(--spacing-md);
+  }
+  
+  .proxima-form-buttons {
+    flex-direction: column;
+  }
+  
+  .proxima-radio-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Mobiles */
+@media (max-width: 480px) {
+  .proxima-header {
+    padding: var(--spacing-sm);
+  }
+  
+  .proxima-header h1 {
+    font-size: 1.2rem;
+  }
+  
+  .proxima-main {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .proxima-map-container {
+    height: 200px;
+  }
+  
+  .proxima-modal {
+    padding: var(--spacing-sm);
+  }
+  
+  .proxima-modal-content {
+    padding: var(--spacing-md);
+  }
+  
+  .proxima-lieu-buttons {
+    flex-direction: column;
+  }
+  
+  .proxima-lieu-buttons .proxima-btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .proxima-nav {
+    gap: var(--spacing-sm);
+  }
+  
+  .proxima-nav a, .proxima-nav button {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
