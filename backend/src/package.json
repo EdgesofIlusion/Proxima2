@@ -1,0 +1,72 @@
+﻿{
+  "name": "proxima-backend",
+  "version": "1.0.0",
+  "description": "Backend API pour Proxima - Plateforme de repérage de lieux",
+  "main": "dist/server.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts",
+    "dev:watch": "nodemon --exec ts-node src/server.ts",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "test": "echo \"Tests à implémenter\" && exit 1",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "ts-node prisma/seed.ts",
+    "prisma:studio": "prisma studio",
+    "docker:build": "docker build -t proxima-backend .",
+    "docker:run": "docker run -p 3001:3001 proxima-backend"
+  },
+  "keywords": [
+    "proxima",
+    "backend",
+    "api",
+    "nodejs",
+    "typescript",
+    "postgresql",
+    "prisma",
+    "express"
+  ],
+  "author": "Proxima Team",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^6.11.1",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.1",
+    "prisma": "^6.11.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^20.11.30",
+    "@typescript-eslint/eslint-plugin": "^7.3.1",
+    "@typescript-eslint/parser": "^7.3.1",
+    "eslint": "^8.57.0",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/votre-username/proxima-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/votre-username/proxima-backend/issues"
+  },
+  "homepage": "https://github.com/votre-username/proxima-backend#readme"
+}
