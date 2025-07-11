@@ -105,12 +105,7 @@ function App() {
   if (showAuth) {
     return (
       <div className="App">
-        <header style={{
-          backgroundColor: '#2c3e50',
-          color: 'white',
-          padding: '1rem',
-          marginBottom: '2rem'
-        }}>
+        <header className="proxima-header">
           <h1>🎬 Proxima - Repérage de Lieux</h1>
         </header>
 
@@ -141,43 +136,24 @@ function App() {
   return (
     <div className="App">
       {/* Header */}
-      <header style={{
-        backgroundColor: '#2c3e50',
-        color: 'white',
-        padding: '1rem',
-        marginBottom: '2rem'
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <header className="proxima-header">
+        <div className="proxima-header-content">
           <div>
             <h1>🎬 Proxima - Repérage de Lieux</h1>
-            <nav>
-              <a href="/" style={{color: 'white', marginRight: '1rem'}}>Accueil</a>
-              <a href="/carte" style={{color: 'white', marginRight: '1rem'}}>Carte</a>
+            <nav className="proxima-nav">
+              <a href="/">Accueil</a>
+              <a href="/carte">Carte</a>
               {user ? (
                 <button
                   onClick={() => setShowAddLieu(true)}
-                  style={{
-                    background: 'none',
-                    border: '1px solid white',
-                    color: 'white',
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '4px',
-                    cursor: 'pointer'
-                  }}
+                  className="proxima-btn proxima-btn-success"
                 >
                   ➕ Ajouter un lieu
                 </button>
               ) : (
                 <button
                   onClick={() => setShowAuth(true)}
-                  style={{
-                    background: 'none',
-                    border: '1px solid white',
-                    color: 'white',
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '4px',
-                    cursor: 'pointer'
-                  }}
+                  className="proxima-btn"
                 >
                   Connexion
                 </button>
@@ -186,23 +162,16 @@ function App() {
           </div>
           
           {user && (
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '0.9rem', marginBottom: '0.25rem' }}>
+            <div className="proxima-user-info">
+              <div style={{ marginBottom: '0.25rem' }}>
                 Connecté en tant que <strong>{user.nom}</strong>
                 {user.type === 'ADMIN' && ' 👑'}
                 {user.type === 'PROPRIO' && ' 🏠'}
               </div>
               <button
                 onClick={handleLogout}
-                style={{
-                  background: 'none',
-                  border: '1px solid white',
-                  color: 'white',
-                  padding: '0.25rem 0.5rem',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  fontSize: '0.8rem'
-                }}
+                className="proxima-btn"
+                style={{ fontSize: '0.8rem' }}
               >
                 Déconnexion
               </button>
@@ -212,17 +181,12 @@ function App() {
       </header>
 
       {/* Contenu principal */}
-      <main style={{padding: '0 2rem'}}>
+      <main className="proxima-main">
         <h2>Bienvenue sur Proxima</h2>
         <p>Plateforme collaborative de repérage de lieux pour tournages et shootings</p>
         
         {user && (
-          <div style={{
-            backgroundColor: '#e8f5e8',
-            padding: '1rem',
-            borderRadius: '8px',
-            marginBottom: '2rem'
-          }}>
+          <div className="proxima-user-welcome">
             <h3>👋 Bonjour {user.nom} !</h3>
             <p>
               {user.type === 'ADMIN' && '👑 Vous êtes administrateur. Vous pouvez modérer tous les lieux.'}
@@ -231,28 +195,22 @@ function App() {
             </p>
             <button
               onClick={() => setShowAddLieu(true)}
-              style={{
-                backgroundColor: '#27ae60',
-                color: 'white',
-                border: 'none',
-                padding: '0.5rem 1rem',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                marginTop: '0.5rem'
-              }}
+              className="proxima-btn proxima-btn-success"
             >
               ➕ Ajouter un nouveau lieu
             </button>
           </div>
         )}
 
-        <div style={{marginTop: '2rem'}}>
+        <div>
           <h3>🗺️ Carte interactive des lieux</h3>
           
           {loading ? (
             <p>Chargement de la carte...</p>
           ) : (
-            <MapComponent lieux={lieux} />
+            <div className="proxima-map-container">
+              <MapComponent lieux={lieux} />
+            </div>
           )}
 
           <h3 style={{marginTop: '2rem'}}>📍 Liste des lieux ({lieux.length})</h3>
@@ -260,58 +218,25 @@ function App() {
           {loading ? (
             <p>Chargement des lieux...</p>
           ) : (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: '1rem',
-              marginTop: '1rem'
-            }}>
+            <div className="proxima-lieux-grid">
               {lieux.map(lieu => (
-                <div key={lieu.id} style={{
-                  border: '1px solid #ddd',
-                  borderRadius: '8px',
-                  padding: '1rem',
-                  backgroundColor: '#f9f9f9'
-                }}>
+                <div key={lieu.id} className="proxima-lieu-card">
                   <h4>{lieu.titre}</h4>
                   <p><strong>Ville:</strong> {lieu.ville}</p>
                   <p><strong>Coordonnées:</strong> {lieu.latitude}, {lieu.longitude}</p>
-                  <div style={{ marginTop: '1rem' }}>
-                    <button style={{
-                      backgroundColor: '#3498db',
-                      color: 'white',
-                      border: 'none',
-                      padding: '0.5rem 1rem',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                      marginRight: '0.5rem'
-                    }}>
+                  <div className="proxima-lieu-buttons">
+                    <button className="proxima-btn proxima-btn-primary">
                       Voir détails
                     </button>
                     {user && (
-                      <button style={{
-                        backgroundColor: '#27ae60',
-                        color: 'white',
-                        border: 'none',
-                        padding: '0.5rem 1rem',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        marginRight: '0.5rem'
-                      }}>
+                      <button className="proxima-btn proxima-btn-success">
                         Contacter
                       </button>
                     )}
                     {user && user.type === 'ADMIN' && (
                       <button
                         onClick={() => handleDeleteLieu(lieu.id)}
-                        style={{
-                          backgroundColor: '#e74c3c',
-                          color: 'white',
-                          border: 'none',
-                          padding: '0.5rem 1rem',
-                          borderRadius: '4px',
-                          cursor: 'pointer'
-                        }}
+                        className="proxima-btn proxima-btn-danger"
                       >
                         🗑️ Supprimer
                       </button>
@@ -323,12 +248,7 @@ function App() {
           )}
         </div>
 
-        <div style={{
-          marginTop: '3rem',
-          padding: '1rem',
-          backgroundColor: '#ecf0f1',
-          borderRadius: '8px'
-        }}>
+        <div className="proxima-status-box">
           <h3>🚀 Statut des services</h3>
           <p>✅ Frontend React: Opérationnel</p>
           <p>✅ Backend Express: Connecté (Port 3001)</p>
@@ -336,7 +256,8 @@ function App() {
           <p>✅ Carte interactive: Fonctionnelle</p>
           <p>✅ Système d'authentification: Actif</p>
           <p>✅ CRUD Lieux: Fonctionnel (Ajout/Suppression)</p>
-          <p>🔄 Design responsive: En développement</p>
+          <p>✅ Design responsive: Actif</p>
+          <p>🎉 Proxima: Complet et fonctionnel !</p>
         </div>
       </main>
 
