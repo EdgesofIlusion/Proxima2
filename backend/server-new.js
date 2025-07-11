@@ -10,7 +10,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-// Test des routes externes
+// Routes API
 const authRoutes = require('./src/routes/auth');
 const lieuRoutes = require('./src/routes/lieux');
 app.use('/api/auth', authRoutes);
@@ -20,13 +20,18 @@ app.get('/', (req, res) => {
   res.json({ message: 'Proxima fonctionne !', status: 'OK' });
 });
 
+app.get('/test-db', async (req, res) => {
+  try {
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+    await prisma.$connect();
+    res.json({ message: 'Base de donn‚es connect‚e !', status: 'PostgreSQL OK' });
+    await prisma.$disconnect();
+  } catch (error) {
+    res.json({ message: 'Erreur', erreur: error.message });
+  }
+});
+
 app.listen(PORT, () => {
   console.log('Serveur Proxima sur port 3001');
 });
-const commentaireRoutes = require('./src/routes/commentaires');
-app.use('/api/commentaires', commentaireRoutes);
-
-// Servir les fichiers uploadÃ©s
-app.use('/uploads', express.static('uploads'));
-const adminRoutes = require('./src/routes/admin');
-app.use('/api/admin', adminRoutes);
