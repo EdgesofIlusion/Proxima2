@@ -10,23 +10,25 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-// Test des routes externes
+// Routes API
 const authRoutes = require('./src/routes/auth');
 const lieuRoutes = require('./src/routes/lieux');
+const commentaireRoutes = require('./src/routes/commentaires');
+const adminRoutes = require('./src/routes/admin');
+
 app.use('/api/auth', authRoutes);
 app.use('/api/lieux', lieuRoutes);
+app.use('/api/commentaires', commentaireRoutes);
+app.use('/api/admin', adminRoutes);
 
+// Fichiers statiques
+app.use('/uploads', express.static('uploads'));
+
+// Route de base
 app.get('/', (req, res) => {
-  res.json({ message: 'Proxima fonctionne !', status: 'OK' });
+  res.json({ message: 'Proxima API', status: 'OK', version: '1.0' });
 });
 
 app.listen(PORT, () => {
-  console.log('Serveur Proxima sur port 3001');
+  console.log(`?? Serveur Proxima sur port ${PORT}`);
 });
-const commentaireRoutes = require('./src/routes/commentaires');
-app.use('/api/commentaires', commentaireRoutes);
-
-// Servir les fichiers uploadés
-app.use('/uploads', express.static('uploads'));
-const adminRoutes = require('./src/routes/admin');
-app.use('/api/admin', adminRoutes);
