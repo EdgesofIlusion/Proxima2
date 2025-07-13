@@ -11,10 +11,10 @@ function App() {
       <div className="App"> 
         <header className="App-header"> 
           <nav> 
-            <h1>?? Proxima - Lieux de tournage</h1> 
+            <h1>?? Proxima</h1> 
             <div> 
               <a href="/">Accueil</a> 
-              <a href="/lieux">Tous les lieux</a> 
+              <a href="/lieux">Lieux</a> 
               <a href="/auth">Connexion</a> 
             </div> 
           </nav> 
