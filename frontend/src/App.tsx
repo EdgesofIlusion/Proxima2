@@ -11,7 +11,7 @@ function App() {
       <div className="App"> 
         <header className="App-header"> 
           <nav> 
-            <h1>?? Proxima - Lieux de tournage</h1> 
+            <h1>🎬 Proxima - Lieux de tournage</h1> 
             <div> 
               <a href="/">Accueil</a> 
               <a href="/lieux">Tous les lieux</a> 

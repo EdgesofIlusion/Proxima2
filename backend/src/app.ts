@@ -3,6 +3,9 @@ import * as express from 'express';
 import * as cors from 'cors'; 
 import { PrismaClient } from '@prisma/client'; 
  
+const authRoutes = require('./routes/auth'); 
+const lieuxRoutes = require('./routes/lieux'); 
+ 
 const app = express(); 
 const prisma = new PrismaClient(); 
  
@@ -17,15 +20,20 @@ const config = {
 app.use(cors()); 
 app.use(express.json()); 
  
+// Routes API 
+app.use('/api/auth', authRoutes); 
+app.use('/api/lieux', lieuxRoutes); 
+ 
 app.get('/', (req, res) => { 
-  res.json({ success: true, message: 'Proxima API v1.0' }); 
+  res.json({ success: true, message: 'Proxima API v1.0 - Lieux de tournage', timestamp: new Date().toISOString() }); 
 }); 
  
 app.get('/test-db', async (req, res) => { 
   try { 
     await prisma.$connect(); 
     const userCount = await prisma.utilisateur.count(); 
-    res.json({ success: true, data: { utilisateurs: userCount } }); 
+    const lieuCount = await prisma.lieu.count(); 
+    res.json({ success: true, data: { utilisateurs: userCount, lieux: lieuCount } }); 
   } catch (error) { 
     res.status(500).json({ success: false, error: 'Erreur DB' }); 
   } 
