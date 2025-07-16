@@ -1,0 +1,227 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ===== UTILISATEURS =====
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  nom       String
+  prenom    String
+  telephone String?
+  role      UserRole @default(LOCATAIRE)
+  verified  Boolean  @default(false)
+  active    Boolean  @default(true)
+  
+  // Données business
+  stripe_customer_id String?
+  premium_until      DateTime?
+  
+  // Timestamps
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  
+  // Relations
+  lieux        Lieu[]
+  reservations Reservation[]
+  reviews_donnees Review[] @relation("ReviewAuthor")
+  reviews_recues  Review[] @relation("ReviewTarget")
+  
+  @@map("users")
+}
+
+enum UserRole {
+  LOCATAIRE
+  PROPRIO
+  ADMIN
+}
+
+// ===== LIEUX =====
+model Lieu {
+  id          String     @id @default(cuid())
+  titre       String
+  description String
+  type        LieuType
+  
+  // Adresse
+  adresse    String
+  ville      String
+  code_postal String
+  latitude   Float
+  longitude  Float
+  
+  // Détails techniques
+  superficie     Int?
+  accessibilite  String?
+  equipements    String[] @default([])
+  restrictions   String?
+  
+  // Business
+  prix_jour      Float
+  caution        Float    @default(200)
+  disponible     Boolean  @default(true)
+  instant_book   Boolean  @default(false)
+  
+  // Média
+  images         String[] @default([])
+  video_url      String?
+  
+  // Propriétaire
+  proprietaire_id String
+  proprietaire    User     @relation(fields: [proprietaire_id], references: [id])
+  
+  // Status
+  statut      LieuStatut @default(EN_ATTENTE)
+  verified    Boolean    @default(false)
+  
+  // Timestamps
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  
+  // Relations
+  reservations Reservation[]
+  reviews      Review[]
+  
+  @@map("lieux")
+}
+
+enum LieuType {
+  INTERIEUR
+  EXTERIEUR
+  HISTORIQUE
+  MODERNE
+  NATUREL
+  URBAIN
+  STUDIO
+}
+
+enum LieuStatut {
+  EN_ATTENTE
+  APPROUVE
+  REJETE
+  SUSPENDU
+}
+
+// ===== RÉSERVATIONS =====
+model Reservation {
+  id         String            @id @default(cuid())
+  
+  // Dates
+  date_debut DateTime
+  date_fin   DateTime
+  nb_jours   Int
+  
+  // Participants
+  locataire_id String
+  locataire    User   @relation(fields: [locataire_id], references: [id])
+  lieu_id      String
+  lieu         Lieu   @relation(fields: [lieu_id], references: [id])
+  
+  // Détails projet
+  type_projet    String
+  nb_personnes   Int
+  description    String?
+  equipements_demandes String[] @default([])
+  
+  // Pricing
+  prix_total     Float
+  caution        Float
+  commission     Float
+  
+  // Status
+  statut         ReservationStatut @default(PENDING)
+  
+  // Timestamps
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+  confirme_at    DateTime?
+  annule_at      DateTime?
+  
+  // Relations
+  payments       Payment[]
+  review         Review?
+  
+  @@map("reservations")
+}
+
+enum ReservationStatut {
+  PENDING      // En attente confirmation
+  CONFIRMED    // Confirmée
+  CANCELLED    // Annulée
+  COMPLETED    // Terminée
+  IN_DISPUTE   // Litige
+}
+
+// ===== PAIEMENTS =====
+model Payment {
+  id             String        @id @default(cuid())
+  
+  reservation_id String
+  reservation    Reservation   @relation(fields: [reservation_id], references: [id])
+  
+  // Montants
+  amount         Float
+  commission     Float
+  type           PaymentType
+  
+  // Stripe
+  stripe_payment_intent_id String?
+  stripe_transfer_id       String?
+  
+  // Status
+  statut         PaymentStatut @default(PENDING)
+  
+  // Timestamps
+  created_at     DateTime @default(now())
+  processed_at   DateTime?
+  
+  @@map("payments")
+}
+
+enum PaymentType {
+  ACOMPTE    // 30% à la réservation
+  SOLDE      // 70% avant tournage
+  CAUTION    // Caution
+  REMBOURSEMENT
+}
+
+enum PaymentStatut {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+// ===== AVIS =====
+model Review {
+  id      String @id @default(cuid())
+  
+  reservation_id String      @unique
+  reservation    Reservation @relation(fields: [reservation_id], references: [id])
+  
+  // Avis croisés
+  auteur_id  String
+  auteur     User   @relation("ReviewAuthor", fields: [auteur_id], references: [id])
+  
+  target_id  String
+  target     User   @relation("ReviewTarget", fields: [target_id], references: [id])
+  
+  lieu_id    String
+  lieu       Lieu   @relation(fields: [lieu_id], references: [id])
+  
+  // Contenu
+  rating     Int    // 1-5
+  commentaire String?
+  
+  // Timestamps
+  created_at DateTime @default(now())
+  
+  @@map("reviews")
+}

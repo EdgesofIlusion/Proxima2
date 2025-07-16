@@ -1,0 +1,11 @@
+/* If not using PostCSS with Tailwind, import the compiled Tailwind CSS instead */
+/* @import 'tailwindcss/base.css'; */
+/* @import 'tailwindcss/components.css'; */
+/* @import 'tailwindcss/utilities.css'; */
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
